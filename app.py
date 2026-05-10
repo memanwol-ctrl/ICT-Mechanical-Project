@@ -1,155 +1,464 @@
+# =========================================================
+# Mechanical Unit Converter & Material Density Checker
+# Developed Using Python & Streamlit
+# Student Name: Aasiya Ismail
+# Roll Number: 25-ME-52
+# Department: Mechanical Engineering
+# =========================================================
+
+# ---------------- IMPORT LIBRARIES ----------------
 import streamlit as st
 
-# --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="Mechanical Engineering Project", page_icon="⚙️", layout="wide")
+# ---------------- PAGE CONFIGURATION ----------------
+st.set_page_config(
+    page_title="Mechanical Engineering Toolkit",
+    page_icon="⚙️",
+    layout="wide",
+    initial_sidebar_state="expanded"
+)
 
-# --- CUSTOM CSS FOR HIGH VISIBILITY ---
+# ---------------- CUSTOM CSS STYLING ----------------
 st.markdown("""
-    <style>
-    /* Main background color */
-    .stApp {
-        background-color: #f8f9fa;
-    }
-    
-    /* Highlighted Student Info Header */
-    .header-box {
-        background-color: #1e3a8a; /* Dark Blue */
-        color: white;
-        padding: 30px;
-        border-radius: 15px;
-        text-align: center;
-        margin-bottom: 25px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .header-box h1 {
-        margin: 0;
-        font-size: 32px;
-    }
-    .header-box h2 {
-        margin: 10px 0 0 0;
-        color: #fbbf24; /* Gold/Amber for the Roll No */
-        font-weight: bold;
-    }
-    
-    /* Card styling for features */
-    .feature-card {
-        background: white;
-        padding: 20px;
-        border-radius: 10px;
-        border: 1px solid #e5e7eb;
-    }
-    </style>
-    """, unsafe_allow_html=True)
+<style>
 
-# --- TOP VISIBILITY HEADER (Visible on every page) ---
-st.markdown(f"""
-    <div class="header-box">
-        <h1>Mechanical Unit Converter & Material Checker</h1>
-        <h2>Student: Aasiya Ismail | Roll No: 25-ME-52</h2>
+/* Main App Background */
+.stApp {
+    background-color: #f4f7fa;
+}
+
+/* Sidebar Styling */
+[data-testid="stSidebar"] {
+    background-color: #0f172a;
+}
+
+[data-testid="stSidebar"] * {
+    color: white;
+}
+
+/* Main Title */
+.main-title {
+    font-size: 42px;
+    font-weight: bold;
+    color: #0f172a;
+    text-align: center;
+}
+
+/* Subtitle */
+.subtitle {
+    font-size: 18px;
+    color: #334155;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Information Card */
+.info-card {
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    border-left: 8px solid #2563eb;
+    margin-bottom: 20px;
+}
+
+/* Section Header */
+.section-header {
+    background-color: #2563eb;
+    padding: 12px;
+    border-radius: 10px;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 15px;
+    color: gray;
+    margin-top: 30px;
+    font-size: 14px;
+}
+
+/* Metric Box */
+.metric-box {
+    background-color: white;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Button Styling */
+.stButton>button {
+    width: 100%;
+    background-color: #2563eb;
+    color: white;
+    border-radius: 8px;
+    height: 45px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.stButton>button:hover {
+    background-color: #1d4ed8;
+    color: white;
+}
+
+</style>
+""", unsafe_allow_html=True)
+
+# =========================================================
+# SIDEBAR NAVIGATION
+# =========================================================
+
+with st.sidebar:
+
+    st.title("⚙️ Navigation Menu")
+
+    st.markdown("---")
+
+    page = st.radio(
+        "Select Feature",
+        [
+            "🏠 Home",
+            "🔄 Unit Converter",
+            "🧪 Material Density Checker"
+        ]
+    )
+
+    st.markdown("---")
+
+    st.success("Mechanical Engineering Toolkit v1.0")
+
+    st.info("Designed using Python & Streamlit")
+
+# =========================================================
+# HOME PAGE
+# =========================================================
+
+if page == "🏠 Home":
+
+    st.markdown('<div class="main-title">⚙️ Mechanical Engineering Toolkit</div>', unsafe_allow_html=True)
+
+    st.markdown(
+        '<div class="subtitle">Mechanical Unit Converter & Material Density Checker</div>',
+        unsafe_allow_html=True
+    )
+
+    # Student Information Card
+    st.markdown(f"""
+    <div class="info-card">
+        <h3>🎓 Student Information</h3>
+        <hr>
+        <p><b>👩 Full Name:</b> Aasiya Ismail</p>
+        <p><b>🆔 Roll Number:</b> 25-ME-52</p>
+        <p><b>🏛️ Department:</b> Mechanical Engineering</p>
     </div>
     """, unsafe_allow_html=True)
 
-# --- SIDEBAR NAVIGATION ---
-with st.sidebar:
-    st.title("Menu")
-    selection = st.radio("Select Feature:", ["Project Dashboard", "Unit Converter", "Material Density Checker"])
+    # Welcome Message
+    st.success("✅ Welcome to the Mechanical Engineering Toolkit")
+
+    st.write("""
+    This professional web application is designed for Mechanical Engineering students 
+    and professionals to perform quick engineering calculations and material property checks.
+    """)
+
+    # Project Features
+    st.markdown('<div class="section-header">📌 Project Features</div>', unsafe_allow_html=True)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.info("""
+        ### 🔄 Mechanical Unit Converter
+        
+        Convert:
+        - Length
+        - Force
+        - Pressure
+        - Temperature
+        - Speed
+        """)
+
+    with col2:
+        st.info("""
+        ### 🧪 Material Density Checker
+        
+        Check:
+        - Material Density
+        - Engineering Properties
+        - Industrial Applications
+        """)
+
+    # Expandable Section
+    with st.expander("📖 About This Project"):
+        st.write("""
+        This project was developed using:
+        - Python
+        - Streamlit
+        - GitHub
+        - Streamlit Cloud
+        
+        The objective is to create a modern engineering toolkit with 
+        a clean and user-friendly interface.
+        """)
+
+# =========================================================
+# UNIT CONVERTER PAGE
+# =========================================================
+
+elif page == "🔄 Unit Converter":
+
+    st.markdown('<div class="section-header">🔄 Mechanical Unit Converter</div>', unsafe_allow_html=True)
+
+    st.write("Convert engineering units accurately and efficiently.")
+
+    # Select Conversion Category
+    category = st.selectbox(
+        "Select Conversion Category",
+        [
+            "Length",
+            "Force",
+            "Pressure",
+            "Temperature",
+            "Speed"
+        ]
+    )
+
     st.markdown("---")
-    st.write("**Course:** Mechanical Engineering")
-    st.write("**Semester:** Spring 2026")
 
-# --- DASHBOARD / HOME ---
-if selection == "Project Dashboard":
-    st.subheader("Welcome to the Engineering Toolkit")
-    st.info("This application provides real-time conversions and material property data for mechanical engineering design.")
-    
-    col_a, col_b = st.columns(2)
-    with col_a:
-        st.success("✅ **Unit Converter** includes Force, Pressure, and Temperature.")
-    with col_b:
-        st.success("✅ **Material Checker** includes Density and Descriptions.")
+    col1, col2 = st.columns(2)
 
-# --- UNIT CONVERTER PAGE ---
-elif selection == "Unit Converter":
-    st.subheader("🔄 Mechanical Unit Converter")
-    
-    category = st.selectbox("Measurement Type", ["Length", "Force", "Pressure", "Temperature", "Speed"])
-    
-    c1, c2 = st.columns(2)
-    
+    # =====================================================
+    # LENGTH CONVERSION
+    # =====================================================
+
     if category == "Length":
-        with c1:
-            val = st.number_input("Value", value=1.0)
-            u_from = st.selectbox("From", ["meter", "centimeter", "millimeter", "inch", "foot"])
-        with c2:
-            u_to = st.selectbox("To", ["meter", "centimeter", "millimeter", "inch", "foot"])
-        conv = {"meter": 1.0, "centimeter": 0.01, "millimeter": 0.001, "inch": 0.0254, "foot": 0.3048}
-        res = val * conv[u_from] / conv[u_to]
-        st.metric("Converted Value", f"{res:.4f} {u_to}")
+
+        units = {
+            "meter": 1,
+            "centimeter": 0.01,
+            "millimeter": 0.001,
+            "inch": 0.0254,
+            "foot": 0.3048
+        }
+
+        with col1:
+            value = st.number_input("Enter Value", value=1.0)
+            from_unit = st.selectbox("From Unit", list(units.keys()))
+
+        with col2:
+            to_unit = st.selectbox("To Unit", list(units.keys()))
+
+        result = value * units[from_unit] / units[to_unit]
+
+        st.metric("Converted Value", f"{result:.4f} {to_unit}")
+
+    # =====================================================
+    # FORCE CONVERSION
+    # =====================================================
 
     elif category == "Force":
-        with c1:
-            val = st.number_input("Value", value=1.0)
-            u_from = st.selectbox("From", ["Newton", "kiloNewton"])
-        with c2:
-            u_to = st.selectbox("To", ["Newton", "kiloNewton"])
-        f = 1000 if u_from == "kiloNewton" and u_to == "Newton" else (0.001 if u_from == "Newton" and u_to == "kiloNewton" else 1)
-        st.metric("Converted Value", f"{val * f:.4f} {u_to}")
+
+        units = {
+            "Newton": 1,
+            "kiloNewton": 1000
+        }
+
+        with col1:
+            value = st.number_input("Enter Force Value", value=1.0)
+            from_unit = st.selectbox("From Unit", list(units.keys()))
+
+        with col2:
+            to_unit = st.selectbox("To Unit", list(units.keys()))
+
+        result = value * units[from_unit] / units[to_unit]
+
+        st.metric("Converted Value", f"{result:.4f} {to_unit}")
+
+    # =====================================================
+    # PRESSURE CONVERSION
+    # =====================================================
 
     elif category == "Pressure":
-        with c1:
-            val = st.number_input("Value", value=1.0)
-            u_from = st.selectbox("From", ["Pascal", "bar", "psi"])
-        with c2:
-            u_to = st.selectbox("To", ["Pascal", "bar", "psi"])
-        conv = {"Pascal": 1.0, "bar": 100000.0, "psi": 6894.76}
-        res = val * conv[u_from] / conv[u_to]
-        st.metric("Converted Value", f"{res:.4f} {u_to}")
+
+        units = {
+            "Pascal": 1,
+            "bar": 100000,
+            "psi": 6894.76
+        }
+
+        with col1:
+            value = st.number_input("Enter Pressure Value", value=1.0)
+            from_unit = st.selectbox("From Unit", list(units.keys()))
+
+        with col2:
+            to_unit = st.selectbox("To Unit", list(units.keys()))
+
+        result = value * units[from_unit] / units[to_unit]
+
+        st.metric("Converted Value", f"{result:.4f} {to_unit}")
+
+    # =====================================================
+    # TEMPERATURE CONVERSION
+    # =====================================================
 
     elif category == "Temperature":
-        with c1:
-            val = st.number_input("Value", value=25.0)
-            u_from = st.selectbox("From", ["Celsius", "Fahrenheit", "Kelvin"])
-        with c2:
-            u_to = st.selectbox("To", ["Celsius", "Fahrenheit", "Kelvin"])
-        if u_from == u_to: res = val
-        elif u_from == "Celsius":
-            res = (val * 9/5) + 32 if u_to == "Fahrenheit" else val + 273.15
-        elif u_from == "Fahrenheit":
-            res = (val - 32) * 5/9 if u_to == "Celsius" else (val - 32) * 5/9 + 273.15
-        elif u_from == "Kelvin":
-            res = val - 273.15 if u_to == "Celsius" else (val - 273.15) * 9/5 + 32
-        st.metric("Converted Value", f"{res:.2f} {u_to}")
+
+        with col1:
+            value = st.number_input("Enter Temperature", value=25.0)
+            from_unit = st.selectbox(
+                "From Unit",
+                ["Celsius", "Fahrenheit", "Kelvin"]
+            )
+
+        with col2:
+            to_unit = st.selectbox(
+                "To Unit",
+                ["Celsius", "Fahrenheit", "Kelvin"]
+            )
+
+        # Conversion Logic
+        if from_unit == to_unit:
+            result = value
+
+        elif from_unit == "Celsius":
+            if to_unit == "Fahrenheit":
+                result = (value * 9/5) + 32
+            else:
+                result = value + 273.15
+
+        elif from_unit == "Fahrenheit":
+            if to_unit == "Celsius":
+                result = (value - 32) * 5/9
+            else:
+                result = ((value - 32) * 5/9) + 273.15
+
+        elif from_unit == "Kelvin":
+            if to_unit == "Celsius":
+                result = value - 273.15
+            else:
+                result = ((value - 273.15) * 9/5) + 32
+
+        st.metric("Converted Value", f"{result:.2f}")
+
+    # =====================================================
+    # SPEED CONVERSION
+    # =====================================================
 
     elif category == "Speed":
-        with c1:
-            val = st.number_input("Value", value=1.0)
-            u_from = st.selectbox("From", ["m/s", "km/h"])
-        with c2:
-            u_to = st.selectbox("To", ["m/s", "km/h"])
-        f = 3.6 if u_from == "m/s" and u_to == "km/h" else (1/3.6 if u_from == "km/h" and u_to == "m/s" else 1)
-        st.metric("Converted Value", f"{val * f:.4f} {u_to}")
 
-# --- MATERIAL DENSITY PAGE ---
-elif selection == "Material Density Checker":
-    st.subheader("🧪 Material Density Checker")
-    
+        units = {
+            "m/s": 1,
+            "km/h": 0.277778
+        }
+
+        with col1:
+            value = st.number_input("Enter Speed", value=1.0)
+            from_unit = st.selectbox("From Unit", list(units.keys()))
+
+        with col2:
+            to_unit = st.selectbox("To Unit", list(units.keys()))
+
+        result = value * units[from_unit] / units[to_unit]
+
+        st.metric("Converted Value", f"{result:.4f} {to_unit}")
+
+    # Reset Button
+    if st.button("🔄 Reset Converter"):
+        st.rerun()
+
+# =========================================================
+# MATERIAL DENSITY CHECKER
+# =========================================================
+
+elif page == "🧪 Material Density Checker":
+
+    st.markdown('<div class="section-header">🧪 Material Density Checker</div>', unsafe_allow_html=True)
+
+    st.write("Check density and engineering properties of common materials.")
+
+    # Material Database
     materials = {
-        "Steel": {"density": 7850, "desc": "High strength, primary structural alloy of iron and carbon."},
-        "Aluminum": {"density": 2700, "desc": "Low density, excellent corrosion resistance for aerospace."},
-        "Copper": {"density": 8960, "desc": "Excellent conductor of heat and electricity."},
-        "Brass": {"density": 8500, "desc": "Low-friction alloy of copper and zinc."},
-        "Cast Iron": {"density": 7200, "desc": "Brittle but excellent for damping and casting."},
-        "Titanium": {"density": 4500, "desc": "High strength-to-weight ratio, extreme corrosion resistance."}
+
+        "Steel": {
+            "density": 7850,
+            "description": "High strength and durability material widely used in structures and machinery.",
+            "application": "Construction, machine parts, automotive structures"
+        },
+
+        "Aluminum": {
+            "density": 2700,
+            "description": "Lightweight and corrosion-resistant metal.",
+            "application": "Aircraft bodies, automobile panels, heat exchangers"
+        },
+
+        "Copper": {
+            "density": 8960,
+            "description": "Excellent conductor of heat and electricity.",
+            "application": "Electrical wiring, motors, heat transfer equipment"
+        },
+
+        "Brass": {
+            "density": 8500,
+            "description": "Copper-zinc alloy with excellent machinability.",
+            "application": "Valves, fittings, musical instruments"
+        },
+
+        "Cast Iron": {
+            "density": 7200,
+            "description": "Strong compression-resistant material.",
+            "application": "Engine blocks, pipes, machine bases"
+        },
+
+        "Titanium": {
+            "density": 4500,
+            "description": "Very strong and lightweight metal with corrosion resistance.",
+            "application": "Aerospace, biomedical implants, racing components"
+        }
     }
-    
-    selected_mat = st.selectbox("Select Material", list(materials.keys()))
-    
-    d_kg = materials[selected_mat]["density"]
-    d_g = d_kg / 1000
-    
+
+    selected_material = st.selectbox(
+        "Select Engineering Material",
+        list(materials.keys())
+    )
+
     st.markdown("---")
-    m1, m2 = st.columns(2)
-    m1.metric("Density (kg/m³)", f"{d_kg:,}")
-    m2.metric("Density (g/cm³)", f"{d_g:.3f}")
-    
-    st.info(f"**Engineering Note:** {materials[selected_mat]['desc']}")
+
+    density_kg = materials[selected_material]["density"]
+    density_g = density_kg / 1000
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric("Density (kg/m³)", f"{density_kg:,}")
+
+    with col2:
+        st.metric("Density (g/cm³)", f"{density_g:.3f}")
+
+    st.info(f"📘 Description: {materials[selected_material]['description']}")
+
+    st.success(f"🏭 Industrial Application: {materials[selected_material]['application']}")
+
+    with st.expander("📚 Engineering Explanation"):
+        st.write("""
+        Density is one of the most important material properties in mechanical engineering.
+        It affects:
+        - Weight
+        - Strength-to-weight ratio
+        - Structural design
+        - Manufacturing applications
+        """)
+
+# =========================================================
+# FOOTER
+# =========================================================
+
+st.markdown("""
+<div class="footer">
+⚙️ Developed using Python & Streamlit | Mechanical Engineering Mini Project
+</div>
+""", unsafe_allow_html=True)
