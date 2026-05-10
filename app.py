@@ -9,7 +9,7 @@ st.set_page_config(page_title="Mechanical Engineering Tool", page_icon="⚙️",
 st.markdown("""
     <style>
     .main {
-        background-color: #f5f7f9;
+        background-color: #000000;
     }
     .stButton>button {
         width: 100%;
