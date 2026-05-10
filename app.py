@@ -16,7 +16,7 @@ st.markdown("""
         border-radius: 5px;
         height: 3em;
         background-color: #007BFF;
-        color: white;
+        color: black;
         font-weight: bold;
     }
     /* Style for the student info box */
